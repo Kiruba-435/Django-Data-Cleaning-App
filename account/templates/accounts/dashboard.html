@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="{% static 'accounts/styles.css' %}">
+</head>
+<body>
+<div class="navbar">
+  <h1>SmartClean</h1>
+  <div class="nav-right">
+    <span>Hello, {{ user.username }} 👋</span>
+    <a href="{% url 'logout' %}">Logout</a>
+  </div>
+</div>
+
+<div class="container">
+  <h2>Data Cleaning Assistant</h2>
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.csv_file.label_tag }} {{ form.csv_file }}<br><br>
+    <div class="switch-group">
+      <label class="switch">
+        <input type="checkbox" name="handle_missing" {% if form.handle_missing.value %}checked{% endif %}>
+        <span class="slider"></span>
+        <span class="label-text">✨ Handle Missing Values</span>
+      </label>
+      </br>
+
+      <label class="switch">
+        <input type="checkbox" name="apply_iqr" {% if form.apply_iqr.value %}checked{% endif %}>
+        <span class="slider"></span>
+        <span class="label-text">🚀 Remove Outliers (IQR)</span>
+      </label>
+      </br>
+
+      <label class="switch">
+        <input type="checkbox" name="encode_labels" {% if form.encode_labels.value %}checked{% endif %}>
+        <span class="slider"></span>
+        <span class="label-text">🔤 Label Encode Categoricals</span>
+      </label>
+      </br>
+
+      <label class="switch">
+        <input type="checkbox" name="drop_dupes" {% if form.drop_dupes.value %}checked{% endif %}>
+        <span class="slider"></span>
+        <span class="label-text">🗑️ Drop Duplicates</span>
+      </label>
+      </br>
+    </div>
+
+    <button class="btn" type="submit">Clean Data</button>
+  </form>
+
+  {% if report %}
+    <h3>Cleaning Summary</h3>
+    <ul>
+      {% for k, v in report.items %}
+        <li><strong>{{ k }}:</strong> {{ v }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  {% if table %}
+    <h3>Cleaned Data Preview (First 5 Rows)</h3>
+    {{ table|safe }}
+    <a href="{% url 'download' %}" class="btn-outline">📥 Download CSV</a>
+  {% endif %}
+</div>
+</body>
+</html>

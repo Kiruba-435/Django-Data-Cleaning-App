@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sign Up</title>
+  <link rel="stylesheet" href="{% static 'accounts/style.css' %}">
+</head>
+<body>
+<div class="container">
+  <h2>Create Account</h2>
+  <div class="quote">"Start your journey today—your login is your launchpad."</div>
+  <form method="POST">
+    {% csrf_token %}
+    {% for field in form %}
+      <div class="form-field">
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field }}
+      </div>
+    {% endfor %}
+    <button type="submit">Register</button>
+  </form>
+  {{ form.errors }}
+  <a href="{% url 'login' %}" class="link">Already have an account? Log in</a>
+</div>
+</body>
+</html>
