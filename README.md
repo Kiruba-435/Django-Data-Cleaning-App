@@ -4,6 +4,13 @@ SmartClean is a web-based data cleaning tool built with Django and pandas. It al
 
 ---
 
+# 🧼 SmartClean — Django Data Cleaning App
+
+**🔗 Live App**: https://django-data-cleaning-app.onrender.com
+
+SmartClean is a web-based data cleaning tool built with Django and pandas...
+
+
 ## 🚀 Features
 
 - 🔐 User authentication (register/login/logout)
