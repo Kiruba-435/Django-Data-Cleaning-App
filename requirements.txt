@@ -1,0 +1,6 @@
+python
+django
+pandas
+scikit-learn
+gunicorn
+dj-database-url>=2.1.0
